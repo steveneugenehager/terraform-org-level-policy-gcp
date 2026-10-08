@@ -1,0 +1,25 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is git-ignored.
+
+org_id          = "123456789012"
+billing_project = "shv-bootstrap-xxxx"
+
+# Dedicated SA created in the bootstrap repo (recommended)
+terraform_service_account = "sa-org-policy@shv-bootstrap-xxxx.iam.gserviceaccount.com"
+
+# gcloud organizations describe ORG_ID --format='value(owner.directoryCustomerId)'
+allowed_customer_ids = ["C0xxxxxxx"]
+
+allowed_locations = ["in:us-locations"]
+
+deny_vm_external_ips = true
+
+# Defaults to all seven; trim to roll out gradually.
+# enforced_boolean_constraints = [
+#   "compute.skipDefaultNetworkCreation",
+#   "compute.requireOsLogin",
+#   "iam.disableServiceAccountKeyCreation",
+#   "iam.automaticIamGrantsForDefaultServiceAccounts",
+#   "storage.uniformBucketLevelAccess",
+#   "storage.publicAccessPrevention",
+#   "sql.restrictPublicIp",
+# ]
