@@ -11,20 +11,15 @@
 # Date        Author                     Version  Description
 # ----------  -------------------------  -------  --------------------------------------------------
 # 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# 2026-10-08  Steve Hager                1.0.1    Removed google_project_service (API enablement 
+#                                                   related. Redundant with something in the bootstrap.
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 locals {
   org_parent = "organizations/${var.org_id}"
 }
 
-# ---------------------------------------------------------------------------
-# API enablement
-# ---------------------------------------------------------------------------
-resource "google_project_service" "orgpolicy" {
-  project            = var.billing_project
-  service            = "orgpolicy.googleapis.com"
-  disable_on_destroy = false
-}
+# “orgpolicy.googleapis.com is enabled on the seed project by terraform-bootstrap-project-gcp.”
 
 # this import is to be "one time" and removed after apply and before commit.
 #import {
@@ -54,7 +49,6 @@ resource "google_org_policy_policy" "boolean" {
     }
   }
 
-  depends_on = [google_project_service.orgpolicy]
 }
 
 # ---------------------------------------------------------------------------
@@ -77,7 +71,6 @@ resource "google_org_policy_policy" "allowed_policy_member_domains" {
     }
   }
 
-  depends_on = [google_project_service.orgpolicy]
 }
 
 # No VM instance may have an external IP address.
@@ -93,7 +86,6 @@ resource "google_org_policy_policy" "vm_external_ip_access" {
     }
   }
 
-  depends_on = [google_project_service.orgpolicy]
 }
 
 # Regional/zonal resources may only be created in these locations.
@@ -112,5 +104,4 @@ resource "google_org_policy_policy" "resource_locations" {
     }
   }
 
-  depends_on = [google_project_service.orgpolicy]
 }
