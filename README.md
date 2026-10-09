@@ -99,6 +99,16 @@ The other list-constraint addresses are
 `google_org_policy_policy.vm_external_ip_access[0]` and
 `google_org_policy_policy.resource_locations[0]`.
 
+### Managed constraints
+
+Newer organizations may also show **managed** versions of some of these
+constraints in that list, named with `.managed.` (for example,
+`iam.managed.disableServiceAccountKeyCreation`). Managed and classic
+constraints are separate policies, so they don't conflict and neither one
+needs importing for the other. If a managed version is already enforced, the
+classic one in this repo is redundant for that control. Keep it for
+consistency, or drop it from `enforced_boolean_constraints`.
+
 ## Rollout cautions
 
 - **`iam.disableServiceAccountKeyCreation`**: confirm nothing depends on SA
