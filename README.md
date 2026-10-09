@@ -1,4 +1,4 @@
-# terraform-org-policy-gcp
+# terraform-org-level-policy-gcp
 
 Organization-wide security baseline for the GCP organization, managed as
 [Organization Policies](https://cloud.google.com/resource-manager/docs/organization-policy/overview)
@@ -13,7 +13,7 @@ folders they apply to, in `terraform-folder-setup-gcp` or downstream repos.
 | Order | Repo / stage | Purpose |
 |---|---|---|
 | 1 | bootstrap repo | Org identity, admin SAs, bootstrap project, state bucket, **org-policy SA** |
-| 2 | **terraform-org-policy-gcp** (this repo) | Org-wide constraints |
+| 2 | **terraform-org-level-policy-gcp** (this repo) | Org-wide constraints |
 | 3 | terraform-folder-setup-gcp | Environment folders (+ folder-level policy overrides) |
 | 4 | project / workload repos | Projects and resources |
 
@@ -44,13 +44,14 @@ Boolean constraints are controlled by `enforced_boolean_constraints`.
 1. **Org-policy service account** (create it in the bootstrap repo):
    - `roles/orgpolicy.policyAdmin` on the **organization**
    - `roles/serviceusage.serviceUsageConsumer` on the billing/quota project
-   - `roles/serviceusage.serviceUsageAdmin` on that project too, if this repo
-     should enable `orgpolicy.googleapis.com` itself
    - `roles/storage.objectAdmin` on the state bucket
-2. **Your user** needs `roles/iam.serviceAccountTokenCreator` on that SA to
+2. **`orgpolicy.googleapis.com` enabled** on the billing/quota project. The
+   bootstrap repo (`terraform-bootstrap-project-gcp`) enables it; this repo
+   does not.
+3. **Your user** needs `roles/iam.serviceAccountTokenCreator` on that SA to
    impersonate it.
-3. **A GCS bucket** for Terraform state.
-4. **Your Workspace customer ID**:
+4. **A GCS bucket** for Terraform state.
+5. **Your Workspace customer ID**:
    ```bash
    gcloud organizations describe ORG_ID \
      --format='value(owner.directoryCustomerId)'
@@ -175,7 +176,7 @@ falls back to Google's default for that constraint, which may be
 | `versions.tf` | Terraform/provider versions, GCS backend (partial config) |
 | `providers.tf` | Google provider with quota project and SA impersonation |
 | `variables.tf` | Inputs with validation |
-| `main.tf` | API enablement and all policies |
+| `main.tf` | All org policies |
 | `outputs.tf` | List of managed policy names |
 | `terraform.tfvars.example` | Example inputs |
 | `backend.hcl.example` | Example state backend config |
