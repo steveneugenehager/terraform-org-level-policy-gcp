@@ -21,10 +21,6 @@ locals {
 
 # “orgpolicy.googleapis.com is enabled on the seed project by terraform-bootstrap-project-gcp.”
 
-# this import is to be "one time" and removed after apply and before commit.
-#import {
-#  to = google_org_policy_policy.allowed_policy_member_domains[0]
-#  id = "organizations/822574087702/policies/iam.allowedPolicyMemberDomains"
 #}
 # ---------------------------------------------------------------------------
 # Boolean constraints (enforced = TRUE at the organization)
