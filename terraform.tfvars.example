@@ -14,6 +14,9 @@
 # 2026-10-08  Steve Hager                1.0.0    Initial creation.
 # 2026-10-09  Steve Hager                1.1.0    Added host_tag_users example; SA renamed to
 #                                                   tf-org-policy-admin to match the bootstrap repo.
+# 2026-10-09  Steve Hager                1.1.1    Added entry to host_tag_users example. In my setup,
+#                                                   the subsequent stage builds projects using the tags
+#                                                   with the terraform-super-admin SA. 
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 
@@ -43,4 +46,7 @@ deny_vm_external_ips = true
 
 # No VMs in Shared VPC host projects (tag-based). The network repo's SA binds the tag.
 # host_project_no_vms = true
-host_tag_users = ["serviceAccount:terraform-super-admin@shv-bootstrap-xxxx.iam.gserviceaccount.com"]
+host_tag_users = [
+  "serviceAccount:terraform-super-admin@shv-bootstrap-xxxx.iam.gserviceaccount.com",
+  "serviceAccount:tf-org-policy-admin@shv-bootstrap-xxxx.iam.gserviceaccount.com",
+]
