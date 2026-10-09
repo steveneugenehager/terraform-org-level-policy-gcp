@@ -1,3 +1,16 @@
+# ==================================================================================================
+# File:        providers.tf
+# Module:      terraform-org-level-policy-gcp (repo)
+# Description: Google provider with quota project and SA impersonation.
+# ==================================================================================================
+#
+# Change History
+# --------------------------------------------------------------------------------------------------
+# Date        Author                     Version  Description
+# ----------  -------------------------  -------  --------------------------------------------------
+# 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
+# --------------------------------------------------------------------------------------------------
 provider "google" {
   # The Org Policy API requires a quota/billing project for every call.
   user_project_override = true

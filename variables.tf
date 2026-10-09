@@ -1,3 +1,16 @@
+# ==================================================================================================
+# File:        variables.tf
+# Module:      terraform-org-level-policy-gcp (repo)
+# Description: Validated inputs for the org, identity, and each policy constraint.
+# ==================================================================================================
+#
+# Change History
+# --------------------------------------------------------------------------------------------------
+# Date        Author                     Version  Description
+# ----------  -------------------------  -------  --------------------------------------------------
+# 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
+# --------------------------------------------------------------------------------------------------
 variable "org_id" {
   description = "Numeric GCP organization ID (gcloud organizations list)."
   type        = string

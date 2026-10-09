@@ -1,3 +1,18 @@
+# ==================================================================================================
+# File:        main.tf
+# Module:      terraform-org-level-policy-gcp (repo)
+# Description: Enables the Org Policy API and enforces the organization-wide security baseline: 
+#              seven boolean constraints, plus allowed IAM member domains, denied VM external IPs, 
+#              and allowed resource locations. 
+# ==================================================================================================
+#
+# Change History
+# --------------------------------------------------------------------------------------------------
+# Date        Author                     Version  Description
+# ----------  -------------------------  -------  --------------------------------------------------
+# 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
+# --------------------------------------------------------------------------------------------------
 locals {
   org_parent = "organizations/${var.org_id}"
 }
@@ -11,6 +26,11 @@ resource "google_project_service" "orgpolicy" {
   disable_on_destroy = false
 }
 
+# this import is to be "one time" and removed after apply and before commit.
+#import {
+#  to = google_org_policy_policy.allowed_policy_member_domains[0]
+#  id = "organizations/822574087702/policies/iam.allowedPolicyMemberDomains"
+#}
 # ---------------------------------------------------------------------------
 # Boolean constraints (enforced = TRUE at the organization)
 #

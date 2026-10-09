@@ -1,3 +1,16 @@
+# ==================================================================================================
+# File:        outputs.tf
+# Module:      terraform-org-level-policy-gcp (repo)
+# Description: Outputs the full resource names of every organization policy this repo manages. 
+# ==================================================================================================
+#
+# Change History
+# --------------------------------------------------------------------------------------------------
+# Date        Author                     Version  Description
+# ----------  -------------------------  -------  --------------------------------------------------
+# 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
+# --------------------------------------------------------------------------------------------------
 output "managed_policies" {
   description = "Full resource names of every org policy managed by this repo."
   value = concat(

@@ -1,4 +1,19 @@
-# Copy to terraform.tfvars and fill in. terraform.tfvars is git-ignored.
+# ==================================================================================================
+# File:        terraform.tfvars.example
+# Module:      terraform-org-level-policy-gcp (repo)
+# Description: Example input values for terraform.tfvars. 
+#
+# ACTION REQUIRED: Copy to terraform.tfvars and fill in. terraform.tfvars is git-ignored.
+#
+# ==================================================================================================
+#
+# Change History
+# --------------------------------------------------------------------------------------------------
+# Date        Author                     Version  Description
+# ----------  -------------------------  -------  --------------------------------------------------
+# 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
+# --------------------------------------------------------------------------------------------------
 
 org_id          = "123456789012"
 billing_project = "shv-bootstrap-xxxx"
