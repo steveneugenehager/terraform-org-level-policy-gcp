@@ -9,6 +9,9 @@
 # Date        Author                     Version  Description
 # ----------  -------------------------  -------  --------------------------------------------------
 # 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# 2026-10-09  Steve Hager                1.1.0    Added host_project_no_vms, host_tag_key,
+#                                                   host_tag_value and host_tag_users for the
+#                                                   tag-based host project no-VM guardrail.
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 variable "org_id" {
@@ -82,4 +85,28 @@ variable "deny_vm_external_ips" {
   description = "If true, enforce compute.vmExternalIpAccess with deny-all at the org (no VM may have an external IP). Relax per folder/project in downstream repos."
   type        = bool
   default     = true
+}
+
+variable "host_project_no_vms" {
+  description = "If true, create the shared-vpc-host tag and deny VM creation in every project that carries it (see host_project_guardrails.tf)."
+  type        = bool
+  default     = true
+}
+
+variable "host_tag_key" {
+  description = "Short name of the org-level tag key that marks a project's purpose."
+  type        = string
+  default     = "purpose"
+}
+
+variable "host_tag_value" {
+  description = "Tag value that marks a Shared VPC host project."
+  type        = string
+  default     = "shared-vpc-host"
+}
+
+variable "host_tag_users" {
+  description = "Principals allowed to bind the host tag to projects, e.g. [\"serviceAccount:terraform-super-admin@SEED_PROJECT_ID.iam.gserviceaccount.com\"]."
+  type        = list(string)
+  default     = []
 }

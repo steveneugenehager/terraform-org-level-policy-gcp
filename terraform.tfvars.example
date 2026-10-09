@@ -12,6 +12,8 @@
 # Date        Author                     Version  Description
 # ----------  -------------------------  -------  --------------------------------------------------
 # 2026-10-08  Steve Hager                1.0.0    Initial creation.
+# 2026-10-09  Steve Hager                1.1.0    Added host_tag_users example; SA renamed to
+#                                                   tf-org-policy-admin to match the bootstrap repo.
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 
@@ -19,7 +21,7 @@ org_id          = "123456789012"
 billing_project = "shv-bootstrap-xxxx"
 
 # Dedicated SA created in the bootstrap repo (recommended)
-terraform_service_account = "sa-org-policy@shv-bootstrap-xxxx.iam.gserviceaccount.com"
+terraform_service_account = "tf-org-policy-admin@shv-bootstrap-xxxx.iam.gserviceaccount.com"
 
 # gcloud organizations describe ORG_ID --format='value(owner.directoryCustomerId)'
 allowed_customer_ids = ["C0xxxxxxx"]
@@ -38,3 +40,7 @@ deny_vm_external_ips = true
 #   "storage.publicAccessPrevention",
 #   "sql.restrictPublicIp",
 # ]
+
+# No VMs in Shared VPC host projects (tag-based). The network repo's SA binds the tag.
+# host_project_no_vms = true
+host_tag_users = ["serviceAccount:terraform-super-admin@shv-bootstrap-xxxx.iam.gserviceaccount.com"]

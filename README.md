@@ -35,14 +35,47 @@ after the policy takes effect.
 | `storage.publicAccessPrevention` | boolean | Buckets/objects can't be made public |
 | `sql.restrictPublicIp` | boolean | Cloud SQL instances can't have public IPs |
 | `gcp.resourceLocations` | list | Regional/zonal resources only in allowed locations (default `in:us-locations`) |
+| `custom.denyComputeInstances` | custom, tag-conditional | No VMs in projects tagged `purpose: shared-vpc-host` (see below) |
 
 Each list constraint can be switched off by variable (empty list / `false`).
 Boolean constraints are controlled by `enforced_boolean_constraints`.
+
+## Network-only Shared VPC host projects
+
+Host projects need the Compute Engine API for their networks, but that API
+also allows VMs. `host_project_guardrails.tf` closes the gap without touching
+any other project:
+
+1. Creates the org-level tag `purpose: shared-vpc-host`.
+2. Grants `roles/resourcemanager.tagUser` on that value to `host_tag_users`
+   (the `terraform-super-admin` SA), so the network repo can bind it.
+3. Defines the custom constraint `custom.denyComputeInstances` (deny every VM
+   CREATE) and enforces it at the organization **only where the tag is
+   present**. Every other project, including other projects in the same
+   `infrastructure` folders, is unaffected.
+
+`terraform-network-project-setup-gcp` binds the tag to each host project
+(`host_project_tag_value`, from `terraform output host_project_tag_value`). Once
+bound, even a project Owner can't create a VM, GKE node or VM-based appliance
+there. Existing VMs are not removed. Turn it off with `host_project_no_vms = false`.
+
+Requires `roles/resourcemanager.tagAdmin` at the organization for the
+org-policy SA, granted by the bootstrap repo.
+
+Check it on a host project:
+
+```bash
+gcloud resource-manager tags bindings list \
+  --parent=//cloudresourcemanager.googleapis.com/projects/HOST_PROJECT_NUMBER
+gcloud org-policies describe custom.denyComputeInstances \
+  --project=HOST_PROJECT_ID --effective
+```
 
 ## Prerequisites
 
 1. **Org-policy service account** (create it in the bootstrap repo):
    - `roles/orgpolicy.policyAdmin` on the **organization**
+   - `roles/resourcemanager.tagAdmin` on the **organization** (host project tag)
    - `roles/serviceusage.serviceUsageConsumer` on the billing/quota project
    - `roles/storage.objectAdmin` on the state bucket
 2. **`orgpolicy.googleapis.com` enabled** on the billing/quota project. The
@@ -186,7 +219,8 @@ falls back to Google's default for that constraint, which may be
 | `versions.tf` | Terraform/provider versions, GCS backend (partial config) |
 | `providers.tf` | Google provider with quota project and SA impersonation |
 | `variables.tf` | Inputs with validation |
-| `main.tf` | All org policies |
+| `main.tf` | Org-level policies |
+| `host_project_guardrails.tf` | Shared VPC host tag and the tag-conditional no-VM policy |
 | `outputs.tf` | List of managed policy names |
 | `terraform.tfvars.example` | Example inputs |
 | `backend.hcl.example` | Example state backend config |

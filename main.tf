@@ -3,7 +3,8 @@
 # Module:      terraform-org-level-policy-gcp (repo)
 # Description: Enforces the organization-wide security baseline:
 #              seven boolean constraints, plus allowed IAM member domains, denied VM external IPs,
-#              and allowed resource locations.
+#              and allowed resource locations. The tag-based no-VM guardrail for Shared VPC host
+#              projects is in host_project_guardrails.tf.
 # ==================================================================================================
 #
 # Change History
@@ -14,6 +15,8 @@
 # 2026-10-08  Steve Hager                1.0.1    Removed google_project_service (API enablement
 #                                                   related). This functionality belonged in the
 #                                                   bootstrap repo.
+# 2026-10-09  Steve Hager                1.1.0    Header points to host_project_guardrails.tf for
+#                                                   the tag-based no-VM guardrail.
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 locals {
