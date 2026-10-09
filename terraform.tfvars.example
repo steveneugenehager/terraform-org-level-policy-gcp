@@ -1,7 +1,7 @@
 # ==================================================================================================
 # File:        terraform.tfvars.example
 # Module:      terraform-org-level-policy-gcp (repo)
-# Description: Example input values for terraform.tfvars. 
+# Description: Example input values for terraform.tfvars.
 #
 # ACTION REQUIRED: Copy to terraform.tfvars and fill in. terraform.tfvars is git-ignored.
 #

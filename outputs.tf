@@ -1,7 +1,7 @@
 # ==================================================================================================
 # File:        outputs.tf
 # Module:      terraform-org-level-policy-gcp (repo)
-# Description: Outputs the full resource names of every organization policy this repo manages. 
+# Description: Outputs the full resource names of every organization policy this repo manages.
 # ==================================================================================================
 #
 # Change History

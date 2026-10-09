@@ -1,9 +1,9 @@
 # ==================================================================================================
 # File:        main.tf
 # Module:      terraform-org-level-policy-gcp (repo)
-# Description: Enforces the organization-wide security baseline: 
-#              seven boolean constraints, plus allowed IAM member domains, denied VM external IPs, 
-#              and allowed resource locations. 
+# Description: Enforces the organization-wide security baseline:
+#              seven boolean constraints, plus allowed IAM member domains, denied VM external IPs,
+#              and allowed resource locations.
 # ==================================================================================================
 #
 # Change History
@@ -11,8 +11,9 @@
 # Date        Author                     Version  Description
 # ----------  -------------------------  -------  --------------------------------------------------
 # 2026-10-08  Steve Hager                1.0.0    Initial creation.
-# 2026-10-08  Steve Hager                1.0.1    Removed google_project_service (API enablement 
-#                                                   related. Redundant with something in the bootstrap.
+# 2026-10-08  Steve Hager                1.0.1    Removed google_project_service (API enablement
+#                                                   related). This functionality belonged in the
+#                                                   bootstrap repo.
 # YYYY-MM-DD  <name>                     x.y.z    <what changed and why>
 # --------------------------------------------------------------------------------------------------
 locals {
@@ -43,7 +44,6 @@ resource "google_org_policy_policy" "boolean" {
       enforce = "TRUE"
     }
   }
-
 }
 
 # ---------------------------------------------------------------------------
@@ -65,7 +65,6 @@ resource "google_org_policy_policy" "allowed_policy_member_domains" {
       }
     }
   }
-
 }
 
 # No VM instance may have an external IP address.
@@ -80,7 +79,6 @@ resource "google_org_policy_policy" "vm_external_ip_access" {
       deny_all = "TRUE"
     }
   }
-
 }
 
 # Regional/zonal resources may only be created in these locations.
@@ -98,5 +96,4 @@ resource "google_org_policy_policy" "resource_locations" {
       }
     }
   }
-
 }
