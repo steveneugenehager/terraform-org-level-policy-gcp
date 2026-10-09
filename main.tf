@@ -1,7 +1,7 @@
 # ==================================================================================================
 # File:        main.tf
 # Module:      terraform-org-level-policy-gcp (repo)
-# Description: Enables the Org Policy API and enforces the organization-wide security baseline: 
+# Description: Enforces the organization-wide security baseline: 
 #              seven boolean constraints, plus allowed IAM member domains, denied VM external IPs, 
 #              and allowed resource locations. 
 # ==================================================================================================
@@ -19,9 +19,8 @@ locals {
   org_parent = "organizations/${var.org_id}"
 }
 
-# “orgpolicy.googleapis.com is enabled on the seed project by terraform-bootstrap-project-gcp.”
+# orgpolicy.googleapis.com is enabled on the seed project by terraform-bootstrap-project-gcp.
 
-#}
 # ---------------------------------------------------------------------------
 # Boolean constraints (enforced = TRUE at the organization)
 #
